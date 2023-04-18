@@ -1,4 +1,5 @@
 {
+  
   "expo": {
     "name": "worked-hours",
     "slug": "worked-hours",
@@ -25,6 +26,14 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-calendar",
+        {
+          "calendarPermission": "The app needs to access your calendar."
+        }
+      ]
+    ]
   }
 }
