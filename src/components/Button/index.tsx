@@ -18,7 +18,7 @@ export function Button({
     onPress,
     enabled = true,
     loading = false,
-    light = false
+    light = true
     }: Props) {
     const theme = useTheme();
     return (

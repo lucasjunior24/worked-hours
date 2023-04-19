@@ -20,6 +20,7 @@ import {
 
 import theme from './src/styles/theme';
 import { Home } from './src/pages/Home/Home';
+import {MyTimePicker} from './src/components/DateTimePicker/DateTimePicker';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
