@@ -13,10 +13,11 @@ interface ButtonTextProps {
 export const Container = styled(RectButton)<ButtonProps>`
     width: 100%;
 
-    padding: 19px;
+    padding: 25px;
     align-items: center;
     justify-content: center;
     background-color: ${({ color }) => color };
+    border-radius: 10px;
 `;
 
 export const Title = styled.Text<ButtonTextProps>`

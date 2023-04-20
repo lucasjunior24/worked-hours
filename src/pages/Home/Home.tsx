@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment'
 // import { useNavigation } from '@react-navigation/native'
 // import * as Yup from 'yup';
 import { Text } from 'react-native';
@@ -36,6 +37,7 @@ export function Home() {
   // console.log(minutos)
   const [entradaHoraOne, setEntradaHoraOne] = useState('');
   const [saidaOne, setSaidaOne] = useState('');
+  const [horasTrabalhadasOne, setHorasTrabalhadasOne] = useState('');
   // const [entradaTwo, setEntradaTwo] = useState('');
   // const [saidaTwo, setSaidaTwo] = useState('');
 
@@ -44,12 +46,27 @@ export function Home() {
   
   const getEntradaHoraOneParent = (childdata: string) => {
     setEntradaHoraOne(childdata);
+    calcularHoras(entradaHoraOne, saidaOne)
   }
 
   const getSaidaOneParent = (childdata: string) => {
     setSaidaOne(childdata);
+    calcularHoras(entradaHoraOne, saidaOne)
   }
   
+  function calcularHoras(dtChegada: string, dtPartida: string) {
+    // var dtChegada  = "07:00";
+    // var dtPartida = "11:20";
+  
+    var ms = moment(dtPartida,"HH:mm").diff(moment(dtChegada,"HH:mm"));
+    var d = moment.duration(ms);
+    var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
+    console.log(s)
+    console.log(s.includes(":"))
+    if (s.includes(":")) {
+      setHorasTrabalhadasOne(s)
+    }
+  }
   return (
     <KeyboardAvoidingView behavior='position' enabled>
       <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -74,10 +91,10 @@ export function Home() {
               </Main>
             </Form>
             <Title>
-              {!entradaHoraOne || saidaOne && 
+              {horasTrabalhadasOne &&
                 (
                   <Text>
-                   {entradaHoraOne} - {saidaOne}
+                   {horasTrabalhadasOne}
                   </Text>
                 )
               }
