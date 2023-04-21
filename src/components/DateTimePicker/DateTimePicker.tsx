@@ -5,22 +5,23 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { Button } from '../Button';
 
-export const MyTimePicker = ({childToParent}) => {
+export const MyTimePicker = ({childToParent}: any) => {
   let hoje = new Date(Date.now())
   const hoursAndMinutes = padTo2Digits(hoje.getHours()) + ':' + padTo2Digits(hoje.getMinutes());
 
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [date, setDate] = useState(hoje);
   const [hour, setHour] = useState(hoursAndMinutes);
+
   const showPicker = () => {
     setIsPickerShow(true);
   };
 
-  function padTo2Digits(num) {
+  function padTo2Digits(num: number) {
     return String(num).padStart(2, '0');
   }
 
-  const onChange = (event, value) => {
+  const onChange = (event: any, value: any) => {
     let data = new Date(value)
 
     const hoursAndMinutes = padTo2Digits(data.getHours()) + ':' + padTo2Digits(data.getMinutes());

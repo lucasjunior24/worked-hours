@@ -23,12 +23,12 @@ export const Steps = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: ${RFValue(26)}px;
+  font-size: ${RFValue(16)}px;
   font-family: ${({ theme }) => theme.fonts.secondary_600};
   color: ${({ theme }) => theme.colors.white};
   
-  margin-top: 60px;
-  margin-bottom: 16px;
+  margin-top: 15px;
+  margin-bottom: 10px;
 `;
 
 export const Form = styled.View`

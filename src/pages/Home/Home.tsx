@@ -38,7 +38,11 @@ export function Home() {
   const [entradaHoraOne, setEntradaHoraOne] = useState('');
   const [saidaOne, setSaidaOne] = useState('');
   const [horasTrabalhadasOne, setHorasTrabalhadasOne] = useState('');
-  // const [entradaTwo, setEntradaTwo] = useState('');
+  const [voltaDoIntervalo, setVoltaDoIntervalo] = useState('');
+
+  // const [saidaTwo, setSaidaTwo] = useState('');
+
+  const [horaSaida, setHoraSaida] = useState('');
   // const [saidaTwo, setSaidaTwo] = useState('');
 
   // const [data, setData] = useState('');
@@ -53,26 +57,59 @@ export function Home() {
     setSaidaOne(childdata);
     calcularHoras(entradaHoraOne, saidaOne)
   }
-  
-  function calcularHoras(dtChegada: string, dtPartida: string) {
-    // var dtChegada  = "07:00";
-    // var dtPartida = "11:20";
-  
+  function obterDiferencaDeHoras(dtChegada: string, dtPartida: string) {
     var ms = moment(dtPartida,"HH:mm").diff(moment(dtChegada,"HH:mm"));
     var d = moment.duration(ms);
     var s = Math.floor(d.asHours()) + moment.utc(ms).format(":mm");
-    console.log(s)
-    console.log(s.includes(":"))
-    if (s.includes(":")) {
-      setHorasTrabalhadasOne(s)
+    return s
+  }
+
+  function somarHoras(hora_a: string, hora_b: number = 1) {
+    var horas_somadas = moment(hora_a,"HH:mm").add(hora_b, "hours").format("HH:mm")
+    return horas_somadas
+  }
+
+  function calcularHoras(dtChegada: string, dtPartida: string) {
+    console.log("____ partida_________")
+    console.log(dtPartida)
+    console.log("volta_almoco")
+
+    var horas_somadas = somarHoras(dtPartida)
+
+    console.log(horas_somadas)
+
+
+    const horasTrabalhadasOne = obterDiferencaDeHoras(dtChegada, dtPartida)
+    console.log(horasTrabalhadasOne)
+    console.log("----------------------------------------------------------")
+    console.log(horas_somadas.includes(":"))
+    if (horasTrabalhadasOne.includes(":")) {
+      setHorasTrabalhadasOne(horasTrabalhadasOne)
+      const horasRestanteDeTrabalho = obterDiferencaDeHoras(horasTrabalhadasOne, "08:13")
+      console.log(`Faltam ${horasRestanteDeTrabalho} horas de trabalho`)
+      console.log(horasRestanteDeTrabalho)
+      console.log(horas_somadas)
+
+      var hora_saida = moment(horas_somadas,"HH:mm").add(horasRestanteDeTrabalho, "hours").format("HH:mm")
+      // var hora_saida = somarHoras(horas_somadas, Number(horasRestanteDeTrabalho))
+      console.log("Eu saio as ")
+
+      console.log(hora_saida)
+      setHoraSaida(hora_saida)
+      // if (horasRestanteDeTrabalho.includes(":")) {
+      //   setVoltaDoIntervalo(volta_almoco)
+      // }
     }
+    if (horas_somadas.includes(":")) {
+      setVoltaDoIntervalo(horas_somadas)
+    }
+    
   }
   return (
     <KeyboardAvoidingView behavior='position' enabled>
-      <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      {/* <TouchableWithoutFeedback onPress={Keyboard.dismiss}> */}
         <Container>
           <Header>
-            {/* <BackButton onPress={handleBack} /> */}
             <Steps>
               <Bullet active />
               <Bullet />
@@ -87,20 +124,38 @@ export function Home() {
               <FormTitle>Que horas você entrou?</FormTitle>
               <Main>
                 <MyTimePicker childToParent={getEntradaHoraOneParent} />
-                <MyTimePicker childToParent={getSaidaOneParent}  />
+                <MyTimePicker childToParent={getSaidaOneParent} />
               </Main>
             </Form>
             <Title>
               {horasTrabalhadasOne &&
                 (
                   <Text>
-                   {horasTrabalhadasOne}
+                   Horas Trabalhadas até o momento {horasTrabalhadasOne}
                   </Text>
                 )
               }
             </Title>
+            <Title>
+              {voltaDoIntervalo &&
+                (
+                  <>
+                   Sua volta do almoço será <Text style={{backgroundColor: 'red'}}> {voltaDoIntervalo} </Text>
+                  </>
+                )
+              }
+            </Title>
+            <Title>
+              {horaSaida &&
+                (
+                  <>
+                   Você sairá <Text style={{backgroundColor: 'red'}}> {horaSaida} </Text>
+                  </>
+                )
+              }
+            </Title>
         </Container>
-      </TouchableWithoutFeedback>
+      {/* </TouchableWithoutFeedback> */}
     </KeyboardAvoidingView>
   )
 }
