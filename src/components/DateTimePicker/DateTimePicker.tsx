@@ -5,13 +5,13 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { Button } from '../Button';
 
-export const MyTimePicker = ({childToParent}: any) => {
+export const MyTimePicker = ({childToParent, voltaDoIntervalo}: any) => {
   let hoje = new Date(Date.now())
   const hoursAndMinutes = padTo2Digits(hoje.getHours()) + ':' + padTo2Digits(hoje.getMinutes());
 
   const [isPickerShow, setIsPickerShow] = useState(false);
   const [date, setDate] = useState(hoje);
-  const [hour, setHour] = useState(hoursAndMinutes);
+  const [hour, setHour] = useState(voltaDoIntervalo ? voltaDoIntervalo : '');
 
   const showPicker = () => {
     setIsPickerShow(true);
@@ -23,15 +23,16 @@ export const MyTimePicker = ({childToParent}: any) => {
 
   const onChange = (event: any, value: any) => {
     let data = new Date(value)
-
     const hoursAndMinutes = padTo2Digits(data.getHours()) + ':' + padTo2Digits(data.getMinutes());
-    console.log(hoursAndMinutes);
-    setHour(hoursAndMinutes);
-    setDate(data)
-    childToParent(hoursAndMinutes)
-    if (Platform.OS === 'android') {
-      setIsPickerShow(false);
+    if(event.type !== "dismissed") {
+      setHour(hoursAndMinutes);
+      setDate(data)
+      childToParent(hoursAndMinutes)
+      if (Platform.OS === 'android') {
+        setIsPickerShow(false);
+      }
     }
+    setIsPickerShow(false);
   };
 
   return (
@@ -51,15 +52,11 @@ export const MyTimePicker = ({childToParent}: any) => {
           onChange={onChange}
           style={styles.datePicker}
         />
-        
       )}
     </View>
   );
 };
 
-// Kindacode.com
-// just add some styles to make our app look more beautiful
-// This is not the focus of this article
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
@@ -69,14 +66,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 30,
   },
-  // pickedDate: {
-  //   fontSize: 18,
-  //   color: 'black',
-  //   padding: 36,
-  //   backgroundColor: '#888',
-  //   borderRadius: 10,
-  // },
-  // This only works on iOS
   datePicker: {
     width: 320,
     height: 260,
