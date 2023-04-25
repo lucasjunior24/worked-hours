@@ -3,6 +3,7 @@ export default {
         header: '#1B1B1F',
     
         background_primary: '#050113',
+        background_test: '#fffff3',
         background_secondary: '#FFF',
     
         text: '#7A7A80',
