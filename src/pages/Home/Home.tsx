@@ -30,27 +30,39 @@ export function Home() {
 
   const [entradaHoraOne, setEntradaHoraOne] = useState('');
   const [saidaOne, setSaidaOne] = useState('');
+  
   const [horasTrabalhadasOne, setHorasTrabalhadasOne] = useState('');
-  const [voltaDoIntervalo, setVoltaDoIntervalo] = useState('');
-
   const [horasRestanteDeTrabalho, setHorasRestanteDeTrabalho] = useState('');
+  const [horasTrabalhadasTotal, sethorasTrabalhadasTotal] = useState('');
+
+
+  const [tempoIntervalo, setTempoIntervalo] = useState('');
+  const [voltaDoIntervalo, setVoltaDoIntervalo] = useState('');
   const [horaSaida, setHoraSaida] = useState('');
 
-  const getVoltaDoIntervaloParent = (childdata: string) => {
-    setVoltaDoIntervalo(childdata);
-    calcularSaida(childdata)
-  }
 
   const getEntradaHoraOneParent = (childdata: string) => {
     setEntradaHoraOne(childdata);
     console.log("childdata", childdata)
-    console.log("entradaHoraOne", entradaHoraOne)
+    if (voltaDoIntervalo) {
+      console.log("voltaDoIntervalo : ", voltaDoIntervalo)
+      calcularHorasUpdate(childdata, saidaOne)
+    }
     calcularHoras(childdata, saidaOne)
   }
 
   const getSaidaOneParent = (childdata: string) => {
     setSaidaOne(childdata);
+    if (voltaDoIntervalo) {
+      calcularHorasUpdate(entradaHoraOne, childdata)
+    }
     calcularHoras(entradaHoraOne, childdata)
+  }
+
+  const getVoltaDoIntervaloParent = (childdata: string) => {
+    setVoltaDoIntervalo(childdata);
+    calcularSaida(childdata)
+    getTotalDeHorasTrabalhadas()
   }
 
   function obterDiferencaDeHoras(dtChegada: string, dtPartida: string) {
@@ -60,12 +72,31 @@ export function Home() {
     return s
   }
 
-  function somarHoras(hora_a: string, hora_b: any = 1) {
+  function somarHoras(hora_a: string, hora_b: string | number) {
     var horas_somadas = moment(hora_a,"HH:mm").add(hora_b, "hours").format("HH:mm")
     return horas_somadas
   }
 
-  
+  function getTotalDeHorasTrabalhadas() {
+    console.log("entra da Hora One: ", horasTrabalhadasOne)
+    console.log("horas Restante De Trabalho: ", horasRestanteDeTrabalho)
+    var horas_trabalhadas = somarHoras(horasTrabalhadasOne, horasRestanteDeTrabalho)
+    console.log("horas_trabalhadas: ", horas_trabalhadas)
+    sethorasTrabalhadasTotal(horas_trabalhadas)
+
+  }
+
+  function getVoltaDoIntervalo(dtPartida: string, dtChegada: string | number = 1) {
+    console.log("PARTIDA: ", dtPartida)
+    if(dtPartida) {
+      var horas_somadas = somarHoras(dtPartida, dtChegada)
+      if (horas_somadas.includes(":")) {
+        setVoltaDoIntervalo(horas_somadas)
+        return horas_somadas
+      }
+    }
+  }
+
   function calcularSaida(nova_voltaDoIntervalo: string) {
     console.log("nova_voltaDoIntervalo")
     console.log(nova_voltaDoIntervalo)
@@ -75,22 +106,44 @@ export function Home() {
   }
 
   function calcularHoras(dtChegada: string, dtPartida: string) {
-    console.log("PARTIDA: ", dtPartida)
     if(dtPartida) {
-      var horas_somadas = somarHoras(dtPartida)
-      console.log(horas_somadas)
-      const horasTrabalhadasOne = obterDiferencaDeHoras(dtChegada, dtPartida)
-      if (horasTrabalhadasOne.includes(":")) {
-        setHorasTrabalhadasOne(horasTrabalhadasOne)
-        const horasRestanteDeTrabalho = obterDiferencaDeHoras(horasTrabalhadasOne, "08:13")
-        setHorasRestanteDeTrabalho(horasRestanteDeTrabalho)
-        if (horas_somadas.includes(":")) {
-          setVoltaDoIntervalo(horas_somadas)
+      var horas_somadas = somarHoras(dtPartida, 1)
+      if (horas_somadas.includes(":")) {
+        setVoltaDoIntervalo(horas_somadas)
+
+        console.log("horas_somadas", horas_somadas)
+        const horasTrabalhadasOne = obterDiferencaDeHoras(dtChegada, dtPartida)
+        if (horasTrabalhadasOne.includes(":")) {
+          setHorasTrabalhadasOne(horasTrabalhadasOne)
+
+
+          const horasRestanteDeTrabalho = obterDiferencaDeHoras(horasTrabalhadasOne, "08:13")
+          setHorasRestanteDeTrabalho(horasRestanteDeTrabalho)
+
+          var hora_saida = moment(horas_somadas ,"HH:mm").add(horasRestanteDeTrabalho, "hours").format("HH:mm")
+          console.log("Eu saio as ", hora_saida)
+          setHoraSaida(hora_saida)
         }
-        var hora_saida = moment(horas_somadas,"HH:mm").add(horasRestanteDeTrabalho, "hours").format("HH:mm")
-        console.log("Eu saio as ", hora_saida)
-        setHoraSaida(hora_saida)
       }
+    }
+  }
+
+  function calcularHorasUpdate(dtChegada: string, dtPartida: string) {
+
+    const voltaDoIntervaloUpdate = getVoltaDoIntervalo(dtPartida, dtChegada)
+    
+    const horasTrabalhadasOne = obterDiferencaDeHoras(dtChegada, dtPartida)
+    if (horasTrabalhadasOne.includes(":")) {
+      setHorasTrabalhadasOne(horasTrabalhadasOne)
+
+
+      const horasRestanteDeTrabalho = obterDiferencaDeHoras(horasTrabalhadasOne, "08:13")
+      setHorasRestanteDeTrabalho(horasRestanteDeTrabalho)
+
+      console.log(voltaDoIntervaloUpdate)
+      var hora_saida = moment(voltaDoIntervaloUpdate,"HH:mm").add(horasRestanteDeTrabalho, "hours").format("HH:mm")
+      console.log("Eu saio as ", hora_saida)
+      setHoraSaida(hora_saida)
     }
   }
   return (
@@ -124,20 +177,21 @@ export function Home() {
                 )
               }
             </Title>
+            <Form>
+              <FormTitle>Sua volta do almoço será</FormTitle>
+              <Main>
               {voltaDoIntervalo &&
                 (
-                  <>
-                    {/* Sua volta do almoço será <Text style={{backgroundColor: 'red'}}> {voltaDoIntervalo} </Text> */}
-                    <Form>
-                      <FormTitle>Sua volta do almoço será</FormTitle>
-                      <Main>
-                        <MyTimePicker childToParent={getVoltaDoIntervaloParent} voltaDoIntervalo={voltaDoIntervalo} />
-                      </Main>
-                    </Form>
-                  </>
+                  <MyTimePicker childToParent={getVoltaDoIntervaloParent} voltaDoIntervalo={voltaDoIntervalo} />
                 )
               }
-
+              {horaSaida &&
+                (
+                  <MyTimePicker childToParent={getVoltaDoIntervaloParent} voltaDoIntervalo={horaSaida} color="red" light={false} />
+                )
+              }
+              </Main>
+            </Form>
             <Title>
               {horaSaida &&
                 (
@@ -147,8 +201,16 @@ export function Home() {
                 )
               }
             </Title>
+            <Title>
+              {horasTrabalhadasTotal &&
+                (
+                  <>
+                   Total de Horas trabalhadas <Text style={{backgroundColor: 'red'}}> {horasTrabalhadasTotal} </Text>
+                  </>
+                )
+              }
+            </Title>
         </Container>
-      {/* </TouchableWithoutFeedback> */}
     </KeyboardAvoidingView>
   )
 }

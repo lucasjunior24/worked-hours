@@ -5,7 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { Button } from '../Button';
 
-export const MyTimePicker = ({childToParent, voltaDoIntervalo}: any) => {
+export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: any) => {
   let hoje = new Date(Date.now())
   const hoursAndMinutes = padTo2Digits(hoje.getHours()) + ':' + padTo2Digits(hoje.getMinutes());
 
@@ -36,10 +36,10 @@ export const MyTimePicker = ({childToParent, voltaDoIntervalo}: any) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       {!isPickerShow && 
         (
-          <Button title={hour} color="#fff" light onPress={showPicker} />
+          <Button title={voltaDoIntervalo ? voltaDoIntervalo : hour} color={color ? color : '#fff'} light={light} onPress={showPicker} />
         )
       }
       {isPickerShow && (
@@ -64,14 +64,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    padding: 30,
+    padding: 20,
   },
   datePicker: {
     width: 320,
     height: 260,
     display: 'flex',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    color: 'red'
+    alignItems: 'flex-start'
   },
 });
