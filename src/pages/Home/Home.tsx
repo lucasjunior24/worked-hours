@@ -1,9 +1,12 @@
 import React, { useState} from 'react';
 import moment from 'moment'
 
-import { Text } from 'react-native';
+import { Text, Button, Alert } from 'react-native';
+
+import * as Notifications from 'expo-notifications';
 
 import { Bullet } from '../../components/Bullet';
+import {MyTimePicker} from '../../components/DateTimePicker/DateTimePicker';
 
 import {
   Container,
@@ -14,7 +17,17 @@ import {
   Form,
   FormTitle
 } from './styles';
-import {MyTimePicker} from '../../components/DateTimePicker/DateTimePicker';
+import { getHoraAtual, padTo2Digits } from '../../utils/uteis';
+
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: true,
+    shouldPlaySound: true,
+    shouldSetBadge: true,
+  }),
+});
+
 
 export function Home() {
 
@@ -107,6 +120,7 @@ export function Home() {
           const hora_saida = moment(horas_somadas ,"HH:mm").add(horasRestanteDeTrabalho, "hours").format("HH:mm")
           console.log("Eu saio as ", hora_saida)
           setHoraSaida(hora_saida)
+          schedulePushNotification()
         }
       }
     }
@@ -119,7 +133,6 @@ export function Home() {
     if (horasTrabalhadasOne.includes(":")) {
       setHorasTrabalhadasOne(horasTrabalhadasOne)
 
-
       const horasRestanteDeTrabalho = obterDiferencaDeHoras(horasTrabalhadasOne, "08:13")
       setHorasRestanteDeTrabalho(horasRestanteDeTrabalho)
 
@@ -129,6 +142,31 @@ export function Home() {
       setHoraSaida(hora_saida)
     }
   }
+
+
+  async function schedulePushNotification() {
+    const { status } = await Notifications.getPermissionsAsync();
+    const horaAtual = getHoraAtual()
+    const diferenca = obterDiferencaDeHoras(horaAtual, horaSaida)
+
+    const [hora, minuto] = diferenca.split(":")
+    const horasEmSegundos = Number(hora) * (60 * 60)
+    const minutosEmSegundos = Number(minuto) * 60
+    const tempoEmSegundos = horasEmSegundos + minutosEmSegundos;
+    if (status !== 'granted') {
+      Alert.alert("Você não tem permissão para receber notificações")
+      return;
+    }
+    await Notifications.scheduleNotificationAsync({
+      content: {
+        title: `Olha o ponto em! você sai as ${horaSaida} horas!`,
+        body: 'Esta quase na sua hora de ir pra casa, não esqueça de bater o ponto!',
+        data: { data: 'goes here' },
+      },
+      trigger: { seconds: tempoEmSegundos},
+    });
+  }
+  
   return (
         <Container>
           <Header>
@@ -187,3 +225,4 @@ export function Home() {
         </Container>
   )
 }
+
