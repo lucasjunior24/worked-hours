@@ -7,3 +7,9 @@ export function getHoraAtual() {
     const hoursAndMinutes = padTo2Digits(hoje.getHours()) + ':' + padTo2Digits(hoje.getMinutes());
     return hoursAndMinutes
 }
+
+export function getDateByHour(hora: number, minuto: number) {
+  let hoje = new Date(Date.now())
+  hoje.setHours(hora, minuto)
+  return hoje
+}

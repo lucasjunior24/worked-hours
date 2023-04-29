@@ -4,14 +4,13 @@ import {StyleSheet, View, Text, Platform} from 'react-native';
 import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { Button } from '../Button';
+import { getDateByHour, getHoraAtual } from '../../utils/uteis';
 
 export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: any) => {
-  let hoje = new Date(Date.now())
-  const hoursAndMinutes = padTo2Digits(hoje.getHours()) + ':' + padTo2Digits(hoje.getMinutes());
-
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [date, setDate] = useState(hoje);
   const [hour, setHour] = useState(voltaDoIntervalo ? voltaDoIntervalo : '');
+  const [hora, minuto] = hour.split(":")
+  const [date, setDate] = useState(voltaDoIntervalo ? getDateByHour(Number(hora), Number(minuto)) : new Date(Date.now()));
 
   const showPicker = () => {
     setIsPickerShow(true);
@@ -32,7 +31,6 @@ export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: an
         setIsPickerShow(false);
       }
     }
-    setIsPickerShow(false);
   };
 
   return (
