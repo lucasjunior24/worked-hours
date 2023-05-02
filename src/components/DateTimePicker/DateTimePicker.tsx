@@ -8,10 +8,10 @@ import { getDateByHour, getHoraAtual } from '../../utils/uteis';
 
 export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: any) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [hour, setHour] = useState(voltaDoIntervalo ? voltaDoIntervalo : '');
+  const [hour, setHour] = useState(voltaDoIntervalo ? voltaDoIntervalo : getHoraAtual);
+  console.log("HORA : ", hour)
   const [hora, minuto] = hour.split(":")
   const [date, setDate] = useState(voltaDoIntervalo ? getDateByHour(Number(hora), Number(minuto)) : new Date(Date.now()));
-
   const showPicker = () => {
     setIsPickerShow(true);
   };
@@ -27,9 +27,9 @@ export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: an
       setHour(hoursAndMinutes);
       setDate(data)
       childToParent(hoursAndMinutes)
-      if (Platform.OS === 'android') {
-        setIsPickerShow(false);
-      }
+    }
+    if (Platform.OS === 'android') {
+      setIsPickerShow(false);
     }
   };
 
