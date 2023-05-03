@@ -1,0 +1,16 @@
+rodar projeto 
+npx expo start
+
+# saber se ta logado no expo
+expo whoami
+
+
+
+gerar apk
+    npm install -g eas-cli
+
+    eas build -p android --profile preview
+
+
+rodar projeto no emulador android
+    npx expo run:android

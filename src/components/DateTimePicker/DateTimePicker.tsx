@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flex: 1,
     justifyContent: 'center',
-    padding: 20,
+    padding: 14,
   },
   datePicker: {
     width: 320,

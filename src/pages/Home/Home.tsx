@@ -1,5 +1,6 @@
 import React, { useState} from 'react';
 import moment from 'moment'
+import { Ionicons  } from '@expo/vector-icons';
 
 import { Text, Button, Alert } from 'react-native';
 
@@ -11,11 +12,17 @@ import {MyTimePicker} from '../../components/DateTimePicker/DateTimePicker';
 import {
   Container,
   Header,
-  Steps,
+  HeaderContent,
   Title,
   Main,
   Form,
-  FormTitle
+  FormTitle,
+  HeaderSubTitle,
+  HeaderTitle,
+  HeaderMenu,
+  HeaderNotificacao,
+  HeaderUser,
+  Photo
 } from './styles';
 import { getHoraAtual, padTo2Digits } from '../../utils/uteis';
 
@@ -170,10 +177,24 @@ export function Home() {
   return (
         <Container>
           <Header>
-            <Steps>
-              <Bullet active />
-              <Bullet />
-            </Steps>
+            <HeaderContent>
+              <HeaderTitle>
+                Bem vindo!
+              </HeaderTitle>
+              <HeaderSubTitle>Olá, Lucas</HeaderSubTitle>
+            </HeaderContent>
+            <HeaderMenu>
+              <HeaderNotificacao>
+                <Ionicons  
+                  name="md-notifications-circle-outline"
+                  size={30}
+                  color="white"
+                />
+              </HeaderNotificacao>
+              <HeaderUser>
+                <Photo source={{ uri: 'https://github.com/lucasjunior24.png' }}/> 
+              </HeaderUser>
+            </HeaderMenu>
           </Header>
 
           <Title>

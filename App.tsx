@@ -20,7 +20,6 @@ import {
 
 import theme from './src/styles/theme';
 import { Home } from './src/pages/Home/Home';
-import {MyTimePicker} from './src/components/DateTimePicker/DateTimePicker';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -38,7 +37,7 @@ export default function App() {
    <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.colors.background_primary }}>
     <ThemeProvider theme={theme}>
         <StatusBar
-          barStyle="light-content"
+          barStyle="dark-content"
           translucent
         />
        <Home />
