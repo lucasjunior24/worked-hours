@@ -45,10 +45,11 @@ export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: an
           value={date}
           display={'spinner'}
           mode={'time'}
-          themeVariant='light'
           is24Hour={true}
           onChange={onChange}
           style={styles.datePicker}
+          positiveButton={{label: 'OK', textColor: 'green'}}
+          negativeButton={{label: 'Cancelar', textColor: 'red'}}
         />
       )}
     </View>
