@@ -20,6 +20,7 @@ import {
 
 import theme from './src/styles/theme';
 import { Home } from './src/pages/Home/Home';
+import { Initial } from './src/pages/Initial/Initial';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -34,14 +35,14 @@ export default function App() {
     return <ActivityIndicator />
   }
   return (
-   <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.colors.background_primary }}>
+   <GestureHandlerRootView style={{ flex: 1 }}>
     <ThemeProvider theme={theme}>
         <StatusBar
           barStyle="light-content"
           backgroundColor='transparent'
           translucent
         />
-       <Home />
+       <Initial />
     </ThemeProvider>
 
    </GestureHandlerRootView>
