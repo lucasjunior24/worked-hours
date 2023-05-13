@@ -186,7 +186,7 @@ export function Home() {
             <HeaderMenu>
               <HeaderNotificacao>
                 <Ionicons  
-                  name="md-notifications-circle-outline"
+                  name="notifications-circle-outline"
                   size={30}
                   color="white"
                 />

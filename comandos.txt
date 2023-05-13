@@ -14,3 +14,6 @@ gerar apk
 
 rodar projeto no emulador android
     npx expo run:android
+
+
+npx expo start --clear

@@ -37,10 +37,11 @@ export const HeaderNotificacao = styled.View`
   width: 40px;
   height: 40px;
   margin: 4px;
+  border-radius: 20px;
+
   align-items: center;
   justify-content: center;
   background-color: ${({ theme }) => theme.colors.purple};
-  border-radius: 20px;
 `;
 
 export const HeaderUser = styled.View`
