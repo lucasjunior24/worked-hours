@@ -17,14 +17,15 @@ import {
 interface Props {
   iconName: React.ComponentProps<typeof Entypo>['name']
   value?: string;
+  placeholder: string;
   childToParent: (time: string) => void;
 }
 
 export function InputPicker({
   iconName,
   value,
-  childToParent,
-  ...rest
+  placeholder,
+  childToParent
   }: Props) {
 
   const [isFocused, setFIsFocused] = useState(false);
@@ -36,10 +37,6 @@ export function InputPicker({
 
       setFIsFocused(true);
       showPicker()
-    // } else {
-    //   handleInputBlur()
-    //   closePicker()
-    // }
   }
   function handleInputBlur() {
     setFIsFocused(false);
@@ -47,9 +44,8 @@ export function InputPicker({
   }
 
   const [isPickerShow, setIsPickerShow] = useState(false);
-  const [hour, setHour] = useState('Tempo de almoço');
+  const [hour, setHour] = useState(placeholder);
   console.log("HORA : ", hour)
-  const [hora, minuto] = hour.split(":")
   const [date, setDate] = useState(new Date(Date.now()))
   const showPicker = () => {
     setIsPickerShow(true);
@@ -72,10 +68,10 @@ export function InputPicker({
         childToParent(hoursAndMinutes)
         console.log(hoursAndMinutes)
       }
-      if (Platform.OS === 'android') {
-        setIsPickerShow(false);
-      } 
-    }
+    } 
+      handleInputBlur()
+      closePicker()
+    
   };
   return (
     <Container>
@@ -100,6 +96,7 @@ export function InputPicker({
           onChange={onChange}
           onTouchEnd={closePicker}
           style={styles.datePicker}
+          onTouchCancel={closePicker}
           positiveButton={{label: 'OK', textColor: 'green'}}
           negativeButton={{label: 'Cancelar', textColor: 'red'}}
         />

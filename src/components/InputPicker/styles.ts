@@ -31,7 +31,7 @@ export const InputText = styled.Text<Props>`
   background: ${({ theme }) => theme.colors.background_secondary};
   align-items: center;
   justify-content: center;
-  font-size: ${RFValue(17)}px;
+  font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};
 

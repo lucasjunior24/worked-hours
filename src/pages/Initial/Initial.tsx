@@ -89,7 +89,7 @@ export function Initial() {
           </Header>
 
           <Title>
-            Crie sua conta
+            Torne sua experiencia unica 
           </Title>
           <Subtitle>
             Faça seu cadastro de{'\n'}
@@ -101,30 +101,24 @@ export function Initial() {
 
 
           <Form>
-            <FormTitle>1. Dados</FormTitle>
+            <FormTitle>Dados</FormTitle>
             <Input 
               iconName='user' 
               placeholder='Nome' 
               onChangeText={setName}
               value={name}
             />
-            <Input 
+
+            <InputPicker
               iconName='back-in-time' 
-              placeholder='Horas tralhadas' 
-              keyboardType='numeric' 
-              onChangeText={handleHorasTrabalhadas}
+              placeholder='Horas trabalhadas' 
               value={email}
+              childToParent={handleHorasTrabalhadas}
             />
-            {/* <Input 
-              iconName='time-slot' 
-              placeholder='Tempo de almoço'
-              keyboardType='numeric' 
-              onChangeText={setDriverLicense}
-              value={driverLicense}
-            /> */}
 
             <InputPicker
               iconName='time-slot' 
+              placeholder='Tempo de almoço'
               value={tempoAlmoco}
               childToParent={setTempoAlmoco}
             />
