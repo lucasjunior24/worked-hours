@@ -4,9 +4,7 @@ import React, { useState } from 'react';
 import theme from '../../styles/theme';
 import { 
   KeyboardAvoidingView,
-  TouchableWithoutFeedback,
-  Keyboard,
-  Alert
+
 } from 'react-native';
 
 import { BackButton } from '../../components/BackButton';
@@ -23,12 +21,28 @@ import {
   Form,
   FormTitle
 } from './styles';
-// import { useAuth } from '../../../hooks/useAuth';
+
+import { InputPicker } from '../../components/InputPicker';
 
 export function Initial() {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
-  const [driverLicense, setDriverLicense] = useState('');
+  const [tempoAlmoco, setTempoAlmoco] = useState('');
+
+  function handleHorasTrabalhadas(event: any) {
+    console.log(event)    
+
+    if(event.length <= 4) {
+      if(event.length === 2) {
+        const test = `${event}:`
+        console.log(test)
+        setEmail(test)
+      } else {
+        setEmail(event)
+        console.log("teste")
+      }
+    }
+  }
 
   // const navigation = useNavigation();
 
@@ -81,6 +95,10 @@ export function Initial() {
             Faça seu cadastro de{'\n'}
             forma rápida e fácil
           </Subtitle>
+          <Subtitle>
+            {email}
+          </Subtitle>
+
 
           <Form>
             <FormTitle>1. Dados</FormTitle>
@@ -94,16 +112,23 @@ export function Initial() {
               iconName='back-in-time' 
               placeholder='Horas tralhadas' 
               keyboardType='numeric' 
-              onChangeText={setEmail}
+              onChangeText={handleHorasTrabalhadas}
               value={email}
             />
-            <Input 
+            {/* <Input 
               iconName='time-slot' 
               placeholder='Tempo de almoço'
               keyboardType='numeric' 
               onChangeText={setDriverLicense}
               value={driverLicense}
+            /> */}
+
+            <InputPicker
+              iconName='time-slot' 
+              value={tempoAlmoco}
+              childToParent={setTempoAlmoco}
             />
+
           </Form>
 
           <Button 

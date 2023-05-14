@@ -5,7 +5,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ActivityIndicator, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
-
 import { 
   useFonts, 
   Inter_400Regular,
