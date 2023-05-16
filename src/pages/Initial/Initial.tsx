@@ -112,8 +112,9 @@ export function Initial() {
             <InputPicker
               iconName='back-in-time' 
               placeholder='Horas trabalhadas' 
+              
               value={email}
-              childToParent={handleHorasTrabalhadas}
+              childToParent={setEmail}
             />
 
             <InputPicker

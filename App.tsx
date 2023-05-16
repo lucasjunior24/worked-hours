@@ -41,7 +41,7 @@ export default function App() {
           backgroundColor='transparent'
           translucent
         />
-       <Initial />
+       <Home />
     </ThemeProvider>
 
    </GestureHandlerRootView>

@@ -15,5 +15,8 @@ gerar apk
 rodar projeto no emulador android
     npx expo run:android
 
+ATUALIZAR PASTA android
+    npx expo prebuild --clear
+
 
 npx expo start --clear

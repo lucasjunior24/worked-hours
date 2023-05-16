@@ -5,6 +5,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 import { Button } from '../Button';
 import { getDateByHour, getHoraAtual } from '../../utils/uteis';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: any) => {
   const [isPickerShow, setIsPickerShow] = useState(false);
@@ -37,7 +38,9 @@ export const MyTimePicker = ({childToParent, voltaDoIntervalo, color, light}: an
     <View style={styles.container} >
       {!isPickerShow && 
         (
-          <Button title={voltaDoIntervalo ? voltaDoIntervalo : hour} color={color ? color : '#fff'} light={light} onPress={showPicker} />
+          <TouchableOpacity onPress={showPicker} style={{backgroundColor: color ? color : '#fff', ...styles.button}} >
+            <Text style={{color: color ? '#fff': '#000'}}>{voltaDoIntervalo ? voltaDoIntervalo : hour}</Text>
+          </TouchableOpacity>
         )
       }
       {isPickerShow && (
@@ -71,5 +74,10 @@ const styles = StyleSheet.create({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'flex-start'
+  },
+  button: {
+    padding: 10,
+    paddingHorizontal: 40,
+    borderRadius: 6,
   },
 });

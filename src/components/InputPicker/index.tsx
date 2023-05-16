@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Entypo } from '@expo/vector-icons';
 import { useTheme } from 'styled-components';
-import { Alert, TextInputProps } from 'react-native';
+import { Alert, TextInputProps, TouchableOpacity } from 'react-native';
 
 import {StyleSheet, View, Text, Platform} from 'react-native';
 
@@ -14,7 +14,7 @@ import {
   InputText 
 } from './styles';
 
-interface Props {
+interface Props extends TextInputProps {
   iconName: React.ComponentProps<typeof Entypo>['name']
   value?: string;
   placeholder: string;
@@ -82,11 +82,15 @@ export function InputPicker({
           color={(isFocused || isFilled) ? theme.colors.main : theme.colors.text_detail}
         />
       </IconContainer>
-      <InputText
-        isFocused={isFocused}
-        onPress={handleInputFocus}
-      >{hour}</InputText>
+      <TouchableOpacity onPress={handleInputFocus} style={{flex: 1, alignSelf: "center", justifyContent: "center"}}>
 
+        <InputText
+          isFocused={isFocused}
+        >
+          {hour}
+        </InputText>
+
+      </TouchableOpacity>
     {isPickerShow && (
         <DateTimePicker
           value={date}

@@ -35,7 +35,7 @@ export const InputText = styled.Text<Props>`
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};
 
-  padding: 12px 23px;
+  padding: 14px 23px;
 
   ${({ isFocused, theme }) => isFocused && css`
     border-bottom-width: 2px;
