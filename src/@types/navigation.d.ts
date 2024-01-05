@@ -5,7 +5,6 @@ export declare global {
             Home: undefined;
             CarDetails: { car: CarDTO };
             MyCars: undefined;
-            
             Scheduling: { car: CarDTO };
             SchedulingDetails: { car: CarDTO, dates: any };
             MyCars: undefined;

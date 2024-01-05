@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useCallback, useState} from 'react';
 import moment from 'moment'
 import { Ionicons  } from '@expo/vector-icons';
 
@@ -67,11 +67,11 @@ export function Home() {
     calcularHoras(entradaHoraOne, childdata)
   }
 
-  const getVoltaDoIntervaloParent = (childdata: string) => {
+  const getVoltaDoIntervaloParent = useCallback((childdata: string) => {
     setVoltaDoIntervalo(childdata);
     calcularSaida(childdata)
     getTotalDeHorasTrabalhadas()
-  }
+  }, [])
 
   function obterDiferencaDeHoras(dtChegada: string, dtPartida: string) {
     const ms = moment(dtPartida,"HH:mm").diff(moment(dtChegada,"HH:mm"));
@@ -92,7 +92,7 @@ export function Home() {
 
   }
 
-  function getVoltaDoIntervalo(dtPartida: string, dtChegada: string | number = 1) {
+  const getVoltaDoIntervalo = useCallback((dtPartida: string, dtChegada: string | number = 1) => {
     if(dtPartida) {
       const horas_somadas = somarHoras(dtPartida, dtChegada)
       if (horas_somadas.includes(":")) {
@@ -100,7 +100,7 @@ export function Home() {
         return horas_somadas
       }
     }
-  }
+  }, [])
 
   function calcularSaida(nova_voltaDoIntervalo: string) {
     var horas_somadas = somarHoras(nova_voltaDoIntervalo, horasRestanteDeTrabalho)
@@ -133,7 +133,7 @@ export function Home() {
     }
   }
 
-  function calcularHorasUpdate(dtChegada: string, dtPartida: string) {
+  const calcularHorasUpdate = useCallback((dtChegada: string, dtPartida: string) => {
     const voltaDoIntervaloUpdate = getVoltaDoIntervalo(dtPartida, dtChegada)
     
     const horasTrabalhadasOne = obterDiferencaDeHoras(dtChegada, dtPartida)
@@ -148,7 +148,7 @@ export function Home() {
       console.log("Eu saio as ", hora_saida)
       setHoraSaida(hora_saida)
     }
-  }
+  },[])
 
 
   async function schedulePushNotification() {
