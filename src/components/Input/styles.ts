@@ -7,24 +7,34 @@ interface Props {
 }
 
 export const Container = styled.View`
-  align-items: center;
+  flex-direction: row;
+  margin-bottom: 8px;
+`;
+
+export const IconContainer = styled.View<Props>`
+  height: 56px;
+  width: 55px;
   justify-content: center;
-  margin: 4px 12px;
-  height: ${RFValue(70)}px;
-  width: ${RFValue(60)}px;
-  border: 0;
-  border-radius: 5px;
+  align-items: center;
+
+  margin-right: 2px;
+  background: ${({ theme }) => theme.colors.background_secondary};
+
+  ${({ isFocused, theme }) => isFocused && css`
+    border-bottom-width: 2px;
+    border-bottom-color: ${theme.colors.main};
+  `};
 `;
 
 export const InputText = styled(TextInput)<Props>`
   flex: 1;
   background: ${({ theme }) => theme.colors.background_secondary};
 
-  font-size: ${RFValue(16)}px;
+  font-size: ${RFValue(15)}px;
   font-family: ${({ theme }) => theme.fonts.primary_400};
   color: ${({ theme }) => theme.colors.text};
-  
-  padding: 0 20px;
+
+  padding: 0 23px;
 
   ${({ isFocused, theme }) => isFocused && css`
     border-bottom-width: 2px;

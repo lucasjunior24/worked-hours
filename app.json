@@ -1,5 +1,4 @@
 {
-  
   "expo": {
     "name": "worked-hours",
     "slug": "worked-hours",
@@ -10,19 +9,28 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#000000"
     },
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCalendarsUsageDescription": "The app needs to access your calendar.",
+        "NSRemindersUsageDescription": "Allow $(PRODUCT_NAME) to access your reminders"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
-      }
+        "backgroundColor": "#000000"
+      },
+      "permissions": [
+        "android.permission.READ_CALENDAR",
+        "android.permission.WRITE_CALENDAR"
+      ],
+      "package": "com.lucasjunior.workedhours"
     },
     "web": {
       "favicon": "./assets/favicon.png"
@@ -34,6 +42,11 @@
           "calendarPermission": "The app needs to access your calendar."
         }
       ]
-    ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "8cffd604-c843-4eb0-b292-b84ba41e1cfc"
+      }
+    }
   }
 }

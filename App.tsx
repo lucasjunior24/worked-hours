@@ -5,7 +5,6 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { ActivityIndicator, StatusBar } from 'react-native';
 import { ThemeProvider } from 'styled-components';
 
-
 import { 
   useFonts, 
   Inter_400Regular,
@@ -20,7 +19,7 @@ import {
 
 import theme from './src/styles/theme';
 import { Home } from './src/pages/Home/Home';
-import {MyTimePicker} from './src/components/DateTimePicker/DateTimePicker';
+import { Initial } from './src/pages/Initial/Initial';
 
 export default function App() {
   const [fontsLoaded] = useFonts({
@@ -35,10 +34,11 @@ export default function App() {
     return <ActivityIndicator />
   }
   return (
-   <GestureHandlerRootView style={{ flex: 1, backgroundColor: theme.colors.background_primary }}>
+   <GestureHandlerRootView style={{ flex: 1 }}>
     <ThemeProvider theme={theme}>
         <StatusBar
           barStyle="light-content"
+          backgroundColor='transparent'
           translucent
         />
        <Home />

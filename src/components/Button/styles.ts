@@ -20,7 +20,7 @@ export const Container = styled(RectButton)<ButtonProps>`
 `;
 
 export const Title = styled.Text<ButtonTextProps>`
-    font-size: ${RFValue(13)}px;
+    font-size: ${RFValue(15)}px;
     font-family: ${({ theme }) => theme.fonts.primary_500};
-    color: ${({ theme, light }) => light ? theme.colors.header : theme.colors.shape};
+    color: ${({ theme, light }) => light ? theme.colors.white : theme.colors.shape};
 `;
